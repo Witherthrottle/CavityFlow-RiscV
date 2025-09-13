@@ -350,8 +350,8 @@ copy_back_p:
     # set vector length (VL) for 32-bit floats
 loop_p:
     vsetvli t3, t0, e32, m1
-    vle32.v v0, 0(t1)           # load VL floats from src
-    vse32.v v0, 0(t2)           # store VL floats to dst
+    vle32.v v30, 0(t1)           # load VL floats from src
+    vse32.v v30, 0(t2)           # store VL floats to dst
 
     slli t4, t3, 2             # bytes = VL * 4
     add  t1, t1, t4            # advance src ptr
@@ -561,8 +561,8 @@ copy_back_u_func:
     
 copy_back_u:
     vsetvli t3, t0, e32, m1
-    vle32.v  v0, 0(t1)         # load u_final_grid[i]
-    vse32.v  v0, 0(t2)         # store into u_grid[i]
+    vle32.v  v30, 0(t1)         # load u_final_grid[i]
+    vse32.v  v30, 0(t2)         # store into u_grid[i]
     slli t4, t3, 2
     add t1, t1, t4          # advance source pointer
     add t2, t2, t4          # advance destination pointer
@@ -770,8 +770,8 @@ copy_back_v_func:
     
 copy_back_v:
     vsetvli t3, t0, e32, m1
-    vle32.v  v0, 0(t1)         # load u_final_grid[i]
-    vse32.v  v0, 0(t2)         # store into u_grid[i]
+    vle32.v  v30, 0(t1)         # load u_final_grid[i]
+    vse32.v  v30, 0(t2)         # store into u_grid[i]
     slli t4, t3, 2
     add t1, t1, t4          # advance source pointer
     add t2, t2, t4          # advance destination pointer
@@ -955,14 +955,14 @@ here:
     vsetvli a6, t6, e32, m1           # VL = min(remaining, hw_max)
 
     # vector loads
-    vle32.v v0, (t0)               # P chunk
-    vle32.v v1, (t2)               # U chunk
-    vle32.v v2, (t4)               # V chunk
+    vle32.v v1, (t0)               # P chunk
+    vle32.v v2, (t2)               # U chunk
+    vle32.v v3, (t4)               # V chunk
 
     # vector stores
-    vse32.v v0, (t1)
-    vse32.v v1, (t3)
-    vse32.v v2, (t5)
+    vse32.v v1, (t1)
+    vse32.v v2, (t3)
+    vse32.v v3, (t5)
 
     # pointer bumps: bytes = VL * 4
     slli    a7, a6, 2
