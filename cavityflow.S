@@ -89,6 +89,15 @@ dt:     .float 0.001
     .global main
     .extern print_grids
 
+#main works in the following way:
+# for i in range nt
+#   for j in range nit:
+#       call process_pressure_grid -> apply_pressure boundary_conditions
+#   call process_u_grid -> call process_v_grid -> apply u_boundary_conditions -> apply v_boundary_conditions ->
+#   copy_back_u -> copy_back_v ->call store_grids (in data section)
+# print_grids ( C code in print.c)
+
+
 main:
     li   s0, 400             # nt = 100 (outer time loop)
     li a0, 0
